@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Upload Receipt Image</h2>
+<form method="post" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label class="form-label">Receipt Image (JPG/PNG)</label>
+    <input class="form-control" type="file" name="image" accept="image/*" required>
+  </div>
+  <button class="btn btn-primary" type="submit">Upload & Process</button>
+</form>
+{% endblock %}
