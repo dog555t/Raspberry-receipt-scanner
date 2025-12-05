@@ -1,0 +1,1 @@
+# Raspberry-receipt-scanner
