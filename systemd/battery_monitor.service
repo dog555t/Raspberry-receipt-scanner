@@ -1,0 +1,12 @@
+[Unit]
+Description=MakerFocus UPS Battery Monitor
+After=multi-user.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/Raspberry-receipt-scanner
+ExecStart=/usr/bin/env python3 /home/pi/Raspberry-receipt-scanner/battery_daemon.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

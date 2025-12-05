@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Receipts</h2>
+<form class="row g-2 mb-3" method="get">
+  <div class="col-md-4"><input name="search" class="form-control" placeholder="Search vendor or text" value="{{ search or '' }}"></div>
+  <div class="col-md-3"><input name="category" class="form-control" placeholder="Category" value="{{ category or '' }}"></div>
+  <div class="col-md-2"><button class="btn btn-primary" type="submit">Filter</button></div>
+</form>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Vendor</th>
+      <th>Total</th>
+      <th>Category</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in receipts %}
+    <tr>
+      <td>{{ r['date'] }}</td>
+      <td>{{ r['vendor'] }}</td>
+      <td>${{ '%.2f'|format(r['total_amount'] or 0) }}</td>
+      <td>{{ r['category'] }}</td>
+      <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.receipt_detail', receipt_id=r['id']) }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<nav>
+  <ul class="pagination">
+    {% set total_pages = (total // per_page) + (1 if total % per_page else 0) %}
+    {% for p in range(1, total_pages + 1) %}
+    <li class="page-item {% if p == page %}active{% endif %}"><a class="page-link" href="?page={{ p }}{% if search %}&search={{ search }}{% endif %}{% if category %}&category={{ category }}{% endif %}">{{ p }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endblock %}

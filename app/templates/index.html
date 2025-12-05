@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <div class="card text-bg-primary mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Total Receipts</h5>
+        <p class="card-text display-6">{{ summary.count }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-bg-success mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Total Spent</h5>
+        <p class="card-text display-6">${{ '%.2f'|format(summary.spent) }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">Recent Receipts</div>
+  <div class="card-body">
+    {% if summary.recent %}
+    <ul class="list-group">
+      {% for r in summary.recent %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ r['vendor'] or 'Unknown' }}</strong><br>
+          <small>{{ r['date'] }}</small>
+        </div>
+        <span class="badge bg-primary">${{ '%.2f'|format(r['total_amount'] or 0) }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No receipts yet. <a href="{{ url_for('main.scan') }}">Scan one</a> or <a href="{{ url_for('main.upload') }}">upload</a>.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
